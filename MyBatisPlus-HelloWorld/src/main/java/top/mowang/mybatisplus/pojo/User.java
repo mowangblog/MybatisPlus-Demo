@@ -3,6 +3,7 @@ package top.mowang.mybatisplus.pojo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName("t_user")
 @SuppressWarnings("all")
-public class User {
+public class User extends Model<User> {
 
     //value主键字段的名称,如果是id，
     // 可以不用写，type指定主键类型，auto表示自动增长
@@ -33,5 +34,12 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(String username, String password, String email, Double money) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.money = money;
     }
 }

@@ -1,13 +1,14 @@
 package top.mowang.mybatisplus.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.mowang.mybatisplus.pojo.User;
 import top.mowang.mybatisplus.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * MybatisPlus-Demo
@@ -32,4 +33,30 @@ public class UserController {
     public User getUser(@PathVariable Integer id){
         return userService.getById(id);
     }
+
+    @PostMapping("/user")
+    public String saveUser(User user){
+        boolean save = userService.save(user);
+        return save?"添加成功":"添加失败";
+    }
+
+    @PutMapping("/user")
+    public String updateUser(User user){
+        boolean update = userService.updateById(user);
+        return update?"修改成功":"修改失败";
+    }
+
+    @DeleteMapping("/user/{id}")
+    public String deleteUser(@PathVariable Integer id){
+        boolean remove = userService.removeById(id);
+        return remove?"删除成功":"删除失败";
+    }
+
+    @GetMapping("/userPage/{page}")
+    public Page<User> userPage(@PathVariable("page") Integer currentPage){
+        Page<User> page = new Page<>(currentPage,5);
+        Page<User> userPage = userService.page(page,null);
+        return userPage;
+    }
+
 }
